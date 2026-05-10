@@ -105,8 +105,10 @@ Enable hooks in `~/.codex/config.toml`:
 
 ```toml
 [features]
-codex_hooks = true
+hooks = true
 ```
+
+For a one-off session, you can also start Codex with `codex --enable hooks`.
 
 To enable Codex tracking globally, add `~/.codex/hooks.json`:
 
