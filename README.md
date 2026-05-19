@@ -37,6 +37,15 @@ set -g @plugin 'samleeney/tmux-agent-status'
 
 Then press `prefix + I` to install.
 
+On macOS, install a modern Bash before using the sidebar:
+
+```bash
+brew install bash
+```
+
+The plugin auto-detects Homebrew Bash at `/opt/homebrew/bin/bash` or `/usr/local/bin/bash` when macOS launches scripts with the system Bash 3.2.
+If Bash is installed somewhere else, set `TMUX_AGENT_STATUS_BASH` to that path.
+
 By default the plugin:
 
 - Appends the live summary to `status-right`
