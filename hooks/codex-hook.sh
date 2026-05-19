@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Codex hook for tmux-agent-status.
-# Hook events are passed as the first argument from hooks.json; the JSON payload
-# is read from stdin and ignored here because tmux-agent-status only needs the
-# event name to update session state.
+# Hook events are passed as the first argument by the configured Codex command
+# hook. The JSON payload is read from stdin and ignored here because
+# tmux-agent-status only needs the event name to update session state.
 
 STATUS_DIR="$HOME/.cache/tmux-agent-status"
 WAIT_DIR="$STATUS_DIR/wait"

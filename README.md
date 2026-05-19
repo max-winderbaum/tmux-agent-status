@@ -161,9 +161,11 @@ To enable Codex tracking globally, add `~/.codex/hooks.json`:
 }
 ```
 
+Restart Codex, then run `/hooks` in the CLI and trust the new command hooks if Codex marks them as pending review. Non-managed command hooks must be trusted before Codex will run them.
+
 Codex state is also hook-based. The handler marks the tmux session or pane `working` on `UserPromptSubmit` and `PreToolUse`, resets it to `done` on `Stop`, and seeds resumed sessions on `SessionStart`.
 
-This repo also ships a repo-local [`.codex/hooks.json`](.codex/hooks.json), so Codex can pick up the same hook handler automatically when you work inside `tmux-agent-status` itself.
+For repo-local tracking while working on this plugin, put the same hook shape in `<repo>/.codex/hooks.json`. Codex loads project-local hooks once the project `.codex/` layer is trusted.
 
 ## Custom Agent Integration
 
