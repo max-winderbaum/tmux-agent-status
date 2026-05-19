@@ -6,6 +6,11 @@
 #           get_window_status, get_agent_status, sync_session_after_child_scope_change,
 #           plus STATUS_DIR / PARKED_DIR / WAIT_DIR constants.
 
+_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=require-bash4.sh
+source "$_LIB_DIR/require-bash4.sh"
+require_bash4 "$@"
+
 [[ -n "${_SESSION_STATUS_LOADED:-}" ]] && return 0
 _SESSION_STATUS_LOADED=1
 
@@ -21,7 +26,6 @@ mkdir -p "$STATUS_DIR" "$PARKED_DIR" "$WAIT_DIR" "$PANE_DIR" "$SIDEBAR_CLIENT_DI
 [ -f "$REFRESH_FILE" ] || : > "$REFRESH_FILE"
 
 # Source process-detection helpers from the same lib directory.
-_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=agent-processes.sh
 source "$_LIB_DIR/agent-processes.sh"
 
