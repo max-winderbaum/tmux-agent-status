@@ -13,6 +13,8 @@ source "$CURRENT_DIR/lib/session-status.sh"
 source "$CURRENT_DIR/lib/sidebar-clients.sh"
 # shellcheck source=lib/selection-targets.sh
 source "$CURRENT_DIR/lib/selection-targets.sh"
+# shellcheck source=lib/sidebar-selection.sh
+source "$CURRENT_DIR/lib/sidebar-selection.sh"
 
 # ─── Mode ─────────────────────────────────────────────────────────
 PREVIEW_MODE=0
@@ -197,6 +199,19 @@ _collect_cur_client() {
     local info
     info=$(tmux display-message -p $'#{client_session}\t#{pane_id}\t#{window_index}' 2>/dev/null || true)
     IFS=$'\t' read -r CUR_SESSION CUR_PANE CUR_WINDOW_INDEX <<< "$info"
+}
+
+_sync_selected_to_current_client() {
+    local next_selected
+    next_selected=$(sidebar_active_selection_index "$CUR_SESSION" "$CUR_PANE" "$CUR_WINDOW_INDEX") || return 1
+    [[ -n "$next_selected" ]] || return 1
+
+    if (( next_selected != SELECTED )); then
+        SELECTED="$next_selected"
+        return 0
+    fi
+
+    return 1
 }
 
 collect() {
@@ -1036,7 +1051,10 @@ while true; do
             NEEDS_RENDER=1
             _PREVIEW_DIRTY=1
         fi
-        [[ "$cur_token" != "$prev_cur" ]] && NEEDS_RENDER=1
+        if [[ "$cur_token" != "$prev_cur" ]]; then
+            _sync_selected_to_current_client || true
+            NEEDS_RENDER=1
+        fi
     fi
     NEEDS_COLLECT=0
     if (( RESIZED )); then
