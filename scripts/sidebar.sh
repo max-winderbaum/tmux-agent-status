@@ -177,8 +177,10 @@ BGRN=$'\033[1;32m'
 BMAG=$'\033[1;35m'
 BCYN=$'\033[1;36m'
 # Selection highlight: subtle background
-SEL_BG=$'\033[48;5;236m'   # dark gray bg
-CUR_BG=$'\033[48;5;235m'   # slightly darker for current session accent
+# Local patch: bundle a light fg into the highlight bgs so selected rows stay
+# readable on light terminal themes (default fg there is near-black).
+SEL_BG=$'\033[48;5;236m\033[38;5;255m'   # dark gray bg + light fg
+CUR_BG=$'\033[48;5;235m\033[38;5;255m'   # slightly darker for current session accent
 ACC_GRN=$'\033[38;5;114m'  # soft green accent for current session bar
 
 # ─── Fuzzy match ──────────────────────────────────────────────────
