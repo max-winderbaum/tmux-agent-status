@@ -224,6 +224,10 @@ selection_switch_client() {
             ;;
         session)
             tmux switch-client -t "$session" 2>/dev/null
+            # Local patch: land focus on the main pane, not a sidebar left focused.
+            local main_pane
+            main_pane=$(tmux list-panes -t "$session" -F "#{pane_id} #{pane_title}" 2>/dev/null | awk '$2 != "agent-sidebar" {print $1; exit}')
+            [ -n "$main_pane" ] && tmux select-pane -t "$main_pane" 2>/dev/null
             ;;
     esac
 }
